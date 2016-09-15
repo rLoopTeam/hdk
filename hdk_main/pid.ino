@@ -9,6 +9,8 @@ static double set_point = 0; // desired direction in degrees
 static double correction_angle_x; // correction that needs to be made to the direction of the servos to move toward the set_point
 static double correction_angle_y; // correction that needs to be made to the direction of the servos to move toward the set_point
 static double correction_angle_z; // correction that needs to be made to the direction of the servos to move toward the set_point
+static double correction_rpm_y; //correction in pulse for pwm converted from angle
+static double correction_rpm_z; //correction in pulse for pwm converted from angle
 double Err_x = 0;  // Current measured error
 double Err_y = 0;  // Current measured error
 double Err_z = 0;  // Current measured error
@@ -27,7 +29,7 @@ double kd_z; // "" ""
 /*
  * Function for setting up the three PID constants
  */
-void setup_constants(double p_x, double i_x, double d_x, double p_y, double i_y, double d_y, double p_z, double i_z, double d_z)
+void pid_setup(double p_x, double i_x, double d_x, double p_y, double i_y, double d_y, double p_z, double i_z, double d_z)
 {
    kp_x = p_x;
    ki_x = i_x;
@@ -68,9 +70,18 @@ int compute_correction(double Err, double last_error, double kp, double ki, doub
   return correction_angle;
 }
 
+int pulse_correction(double correction_angle){
+  double pulse = 0;
+  if (correction_angle < 0)
+    {
+      correction_angle = -1 * correction_angle;
+    }
+  pulse = correction_angle; // <–––––––––––Need to write something to convert correction angle to pulse 
 
+  return pulse;
+}
 
-void main(){
+void pid_loop(){
   // lagging variable for P error
   last_error_x = Err_x;
   last_error_y = Err_y;
@@ -90,6 +101,9 @@ void main(){
   correction_angle_x = compute_correction(Err_x, last_error_x, kp_x, ki_x, kd_x, timeChange, firstTime);
   correction_angle_y = compute_correction(Err_y, last_error_y, kp_y, ki_y, kd_y, timeChange, firstTime);
   correction_angle_z = compute_correction(Err_z, last_error_z, kp_z, ki_z, kd_z, timeChange, firstTime);
+
+  correction_rpm_y = pulse_correction(correction_angle_y);
+  correction_rpm_z = pulse_correction(correction_angle_z);
 
   /********** YAW CORRECTION (complete w/ pid) *************/
     if (correction_angle_x < 0)
@@ -114,22 +128,34 @@ void main(){
   }
 
   /********** PITCH CORRECTION *************/
-  if (correction_angle_y < 0){
-    // adjust engine rpms
-    //   which motors need to change speed?
-    //   need function to convert correction angle to pulse length (requires data for hdk at rest and at high speed)
-    // set_rpm()
+  // adjust engine rpms
+  //   which motors need to change speed?
+  //   need function to convert correction angle to pulse length (requires data for hdk at rest and at high speed
+  // set_rpm()
+
+  //1, 2 are back; 3, 4 are front
+  if (Err_y < 0)
+  {
+    
   }
-  else{  }
+  else
+  {
+    
+  }
 
   /********** ROLL CORRECTION *************/
-  if (correction_angle_z < 0){
-    // adjust engine rpms
-    //   which motors need to change speed?
-    //   need function to convert correction angle to pulse length (requires data for hdk at rest and at high speed)
-    // set_rpm()
+  // adjust engine rpms
+  //   which motors need to change speed?
+  //   need function to convert correction angle to pulse length (requires data for hdk at rest and at high speed)  
+  // set_rpm()
+  if (Err_z < 0)
+  {
+    set_servo();
   }
-  else{  }
+  else
+  {
+    set_servo();
+  }
 
 
   Serial.print("\tcorrection_angle_x: ");
@@ -144,4 +170,4 @@ void main(){
   Serial.print(Err_y, 4);
   Serial.print("\tErr_z: ");
   Serial.print(Err_z, 4);
-}// end of main
+}// end of main, code that was looped in hdk.ino
