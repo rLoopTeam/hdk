@@ -1,8 +1,7 @@
 // rpm control values
 int rpm_counter = 999;
 
-
-
+void set_rpm();
 
 void rpm_ramp_loop(){
   // increment the pulse length and call func to write to pin
