@@ -1,7 +1,4 @@
 
-static double measured_value_x; // value output from the BNO orientation sensor
-static double measured_value_y; // value output from the BNO orientation sensor
-static double measured_value_z; // value output from the BNO orientation sensor
 static double last_error_x; // error stored from previous loop through code
 static double last_error_y; // error stored from previous loop through code
 static double last_error_z; // error stored from previous loop through code=
@@ -25,6 +22,9 @@ double kd_y; // "" ""
 double kp_z; // constants to tune PID loop
 double ki_z; // "" ""
 double kd_z; // "" ""
+int firstTime = 0;
+
+void set_servo(double myservo1_val, double myservo2_val, double myservo3_val, double myservo4_val); 
 
 /*
  * Function for setting up the three PID constants
@@ -42,7 +42,7 @@ void pid_setup(double p_x, double i_x, double d_x, double p_y, double i_y, doubl
    kd_z = d_z;
 }
 
-int compute_correction(double Err, double last_error, double kp, double ki, double kd, double timeChange, int firstTime){
+int compute_correction(double Err, double last_error, double kp, double ki, double kd, double timeChange){
   // if the sensor is returning a value between 0 and 180, set reverse the error value and set direction to 0
   if (Err > 180)
   {
@@ -81,7 +81,7 @@ int pulse_correction(double correction_angle){
   return pulse;
 }
 
-void pid_loop(){
+void pid_loop(int timeChange){
   // lagging variable for P error
   last_error_x = Err_x;
   last_error_y = Err_y;
@@ -94,13 +94,13 @@ void pid_loop(){
   // measured_value_z = event.orientation.z;
   
   // calculate error from intended orientation (currently set to an absolute value of 0 (like a compass pointing north), but could be adjusted, or even made relative)
-  Err_x = measured_value_x - set_point;
-  Err_y = measured_value_y - set_point;
-  Err_z = measured_value_z - set_point;
+  Err_x = measured_BNO_value_x - set_point;
+  Err_y = measured_BNO_value_y - set_point;
+  Err_z = measured_BNO_value_z - set_point;
 
-  correction_angle_x = compute_correction(Err_x, last_error_x, kp_x, ki_x, kd_x, timeChange, firstTime);
-  correction_angle_y = compute_correction(Err_y, last_error_y, kp_y, ki_y, kd_y, timeChange, firstTime);
-  correction_angle_z = compute_correction(Err_z, last_error_z, kp_z, ki_z, kd_z, timeChange, firstTime);
+  correction_angle_x = compute_correction(Err_x, last_error_x, kp_x, ki_x, kd_x, timeChange);
+  correction_angle_y = compute_correction(Err_y, last_error_y, kp_y, ki_y, kd_y, timeChange);
+  correction_angle_z = compute_correction(Err_z, last_error_z, kp_z, ki_z, kd_z, timeChange);
 
   correction_rpm_y = pulse_correction(correction_angle_y);
   correction_rpm_z = pulse_correction(correction_angle_z);
@@ -148,14 +148,14 @@ void pid_loop(){
   //   which motors need to change speed?
   //   need function to convert correction angle to pulse length (requires data for hdk at rest and at high speed)  
   // set_rpm()
-  if (Err_z < 0)
-  {
-    set_servo();
-  }
-  else
-  {
-    set_servo();
-  }
+  // if (Err_z < 0)
+  //{
+  //set_servo();
+  //}
+  //else
+  //{
+  //set_servo();
+  //}
 
 
   Serial.print("\tcorrection_angle_x: ");

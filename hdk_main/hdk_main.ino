@@ -23,14 +23,14 @@ unsigned long lastTime = 0;  // time stamp in milliseconds of the previous loop
 /********* Declare functions from other files ********/
 // pid.ino
 void pid_setup();
-void pid_loop();
+void pid_loop(int timeChange);
 
 // servo.ino
 void set_servo();
-void servo_initial_setup();
+void servo_setup();
 
-// hover_engine_initial.ino
-void hover_engine_initial_setup();
+// hover_engine.ino
+void hover_engine_setup();
 void start_motors();
 void stop_motors();
 
@@ -53,7 +53,7 @@ void setup(){
   Serial.begin(9600);
 
   servo_setup();
-  hover_engine_initial_setup();
+  hover_engine_setup();
   BNO055_setup();
 
   //setup_constants(0.2, 0, 0); 
@@ -69,9 +69,8 @@ void setup(){
 void loop() {
   unsigned long now = millis();
   double timeChange = (double)(now - lastTime);
-  int firstTime = 0; 
 
-  pid_loop();
+  pid_loop(timeChange);
   rpm_ramp_loop();
   BNO055_loop();
   read_optoNCDT_values();

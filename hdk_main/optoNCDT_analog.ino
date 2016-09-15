@@ -21,7 +21,7 @@ void convert(){
 // TODO similar for laser, would need to connect additional laser wires (brown wire outputs error messages)
 
 /* Takes a reading from each laser distance sensor */
-void read_optoNCDT_Values() {
+void read_optoNCDT_values() {
   sensorValue = analogRead(sensorPin1);
   Serial.print("Sensor1: ");
   Serial.print(sensorValue);

@@ -1,3 +1,7 @@
+static double measured_BNO_value_x; // value output from the BNO orientation sensor
+static double measured_BNO_value_y; // value output from the BNO orientation sensor
+static double measured_BNO_value_z; // value output from the BNO orientation sensor
+
 //Adafruit_MMA8451 mma = Adafruit_MMA8451();
 #define BNO055_SAMPLERATE_DELAY_MS (20)
 
@@ -60,6 +64,17 @@ void displayCalStatus(void)
   {
     Serial.print("! ");
   }
+
+  /* Display the individual values */
+  Serial.println("BNO Values");
+  Serial.print("Sys:");
+  Serial.print(system, DEC);
+  Serial.print(" G:");
+  Serial.print(gyro, DEC);
+  Serial.print(" A:");
+  Serial.print(accel, DEC);
+  Serial.print(" M:");
+  Serial.print(mag, DEC);
 }
 
 
@@ -95,20 +110,11 @@ void BNO055_loop(){
 
   
   // get orientation from sensor
-  measured_value_x = event.orientation.x;
-  measured_value_y = event.orientation.y;
-  measured_value_z = event.orientation.z;
+  measured_BNO_value_x = event.orientation.x;
+  measured_BNO_value_y = event.orientation.y;
+  measured_BNO_value_z = event.orientation.z;
 
-  /* Display the individual values */
-  Serial.println("BNO Values");
-  Serial.print("Sys:");
-  Serial.print(system, DEC);
-  Serial.print(" G:");
-  Serial.print(gyro, DEC);
-  Serial.print(" A:");
-  Serial.print(accel, DEC);
-  Serial.print(" M:");
-  Serial.print(mag, DEC);
+
 
   Serial.print("X: ");
   Serial.print(event.orientation.x, 4);
