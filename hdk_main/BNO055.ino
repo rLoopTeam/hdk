@@ -45,7 +45,6 @@ void displaySensorStatus(void)
   delay(500);
 }
 
-
 void displayCalStatus(void)
 {
   /* Get the four calibration values (0..3) */
