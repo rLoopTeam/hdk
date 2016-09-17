@@ -45,10 +45,11 @@ void stop_motors()
 /*
  * Function for setting the motor rpm (hover engines); speculative range 1000-2000
  */
-void set_rpm(int rpm)
+void set_rpm(int rpm1, int rpm2, int rpm3, int rpm4)
 {
-  analogWrite(pwmPin1, rpm);
-  analogWrite(pwmPin2, rpm);
-  analogWrite(pwmPin3, rpm);
-  analogWrite(pwmPin4, rpm);
+  analogWrite(pwmPin1, rpm1);
+  analogWrite(pwmPin2, rpm2);
+  analogWrite(pwmPin3, rpm3);
+  analogWrite(pwmPin4, rpm4);
 }
+

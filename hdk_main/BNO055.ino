@@ -1,3 +1,10 @@
+/* BNO055.ino
+ * 
+ * 
+ * 
+ * 
+*/ 
+
 static double measured_BNO_value_x; // value output from the BNO orientation sensor
 static double measured_BNO_value_y; // value output from the BNO orientation sensor
 static double measured_BNO_value_z; // value output from the BNO orientation sensor
@@ -78,6 +85,7 @@ void displayCalStatus(void)
 }
 
 
+// Initial setup code for BNO
 void BNO055_setup(){
 	  Serial.println("Orientation Sensor Test"); Serial.println("");
 

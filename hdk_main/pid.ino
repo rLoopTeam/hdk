@@ -1,7 +1,6 @@
-
 static double last_error_x; // error stored from previous loop through code
 static double last_error_y; // error stored from previous loop through code
-static double last_error_z; // error stored from previous loop through code=
+static double last_error_z; // error stored from previous loop through code
 static double set_point = 0; // desired direction in degrees
 static double correction_angle_x; // correction that needs to be made to the direction of the servos to move toward the set_point
 static double correction_angle_y; // correction that needs to be made to the direction of the servos to move toward the set_point

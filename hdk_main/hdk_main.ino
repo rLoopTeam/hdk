@@ -6,9 +6,9 @@
  *  BNO055.ino
  *  servo.ino
  *  hover_engine_initial.ino
- *  rpm_ramp.ino
  *  optoNCDT_analog_HDK_2.ino
- *
+ *  rpm_ramp.ino
+ *  pitch_and_roll.ino
  */
 
 #include <Servo.h>
@@ -19,6 +19,8 @@
 #include <utility/imumaths.h>
 
 unsigned long lastTime = 0;  // time stamp in milliseconds of the previous loop
+unsigned long runTime = 0; // total time code has been running
+unsigned long startTime = millis();
 
 /********* Declare functions from other files ********/
 // pid.ino
@@ -44,6 +46,11 @@ void BNO055_loop();
 // rpm_ramp.ino
 void rpm_ramp_loop();
 
+// pitch_and_roll.ino
+void pitch_and_roll_setup();
+void pitch_and_roll_loop(unsigned long runTime);
+
+
 
 /*
  * Main setup function. 
@@ -59,6 +66,8 @@ void setup(){
   //setup_constants(0.2, 0, 0); 
   pid_setup(0.2, 0, 0, 0, 0, 0, 0, 0, 0); // put this in pid.ino
 
+  delay(1000);
+
 }
 
 
@@ -69,11 +78,13 @@ void setup(){
 void loop() {
   unsigned long now = millis();
   double timeChange = (double)(now - lastTime);
+  runTime = now - startTime;
 
   pid_loop(timeChange);
   rpm_ramp_loop();
   BNO055_loop();
   read_optoNCDT_values();
+  pitch_and_roll_loop(runTime);
 
   Serial.println(""); // New line for next sample
 
