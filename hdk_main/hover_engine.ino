@@ -9,12 +9,13 @@ void hover_engine_setup(){
   pinMode(pwmPin2, OUTPUT);
   pinMode(pwmPin3, OUTPUT);
   pinMode(pwmPin4, OUTPUT);
-  analogWriteFrequency(pwmPin1, 490);
-  analogWriteFrequency(pwmPin2, 490);
+  analogWriteFrequency(pwmPin1, 490); //why?
+  analogWriteFrequency(pwmPin2, 490); // Second parameter is hz
   analogWriteFrequency(pwmPin3, 490);
   analogWriteFrequency(pwmPin4, 490);
+  analogWriteResolution(12);
   stop_motors();
-  delay(6000);
+  delay(3000);
   start_motors();
 
 

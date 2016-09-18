@@ -23,25 +23,29 @@ void convert(){
 /* Takes a reading from each laser distance sensor */
 void read_optoNCDT_values() {
   sensorValue = analogRead(sensorPin1);
-  Serial.print("Sensor1: ");
+//  Serial.print("Sensor1: ");
   Serial.print(sensorValue);
-  Serial.print("  ");
+  Serial.print(",");
+//  Serial.print("  ");
   convert();
-  Serial.println(distance_measured);
+ // Serial.println(distance_measured);
 
   sensorValue = analogRead(sensorPin4);
-  Serial.print("Sensor4: ");
+//  Serial.print("Sensor4: ");
   Serial.print(sensorValue);
-  Serial.print("  ");
+  Serial.print(",");
+//  Serial.print("  ");
   convert();
-  Serial.println(distance_measured);
+  // Serial.println(distance_measured);
 
   sensorValue = analogRead(sensorPin5);
-  Serial.print("Sensor5: ");
+  // Serial.print("Sensor5: ");
   Serial.print(sensorValue);
-  Serial.print("  ");
+  Serial.print(",");
+  Serial.println("");
+  // Serial.print("  ");
   convert();
-  Serial.println(distance_measured);
+  // Serial.println(distance_measured);
 
 }
 

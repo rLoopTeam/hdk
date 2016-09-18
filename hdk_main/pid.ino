@@ -49,14 +49,12 @@ int compute_correction(double Err, double last_error, double kp, double ki, doub
   }
 
   double dErr = 0;
-  double iErr = 0;
-
-  // differential error calculation
-  dErr = (Err - last_error)/timeChange;
-    
 
   if (!firstTime)
   {
+    // differential error calculation
+    dErr = (Err - last_error)/timeChange;
+
     // integral error calculation
     iErr = iErr + Err*timeChange; // this term blows up since lastTime defined to be 0 and now defined to be millis();
   }  
@@ -157,16 +155,16 @@ void pid_loop(int timeChange){
   //}
 
 
-  Serial.print("\tcorrection_angle_x: ");
-  Serial.print(correction_angle_x, 4);
-  Serial.print("\tcorrection_angle_y: ");
-  Serial.print(correction_angle_y, 4);
-  Serial.print("\tcorrection_angle_z: ");
-  Serial.print(correction_angle_z, 4);
-  Serial.print("\tErr_x: ");
-  Serial.print(Err_x, 4);
-  Serial.print("\tErr_y: ");
-  Serial.print(Err_y, 4);
-  Serial.print("\tErr_z: ");
-  Serial.print(Err_z, 4);
+  // Serial.print("\tcorrection_angle_x: ");
+  // Serial.print(correction_angle_x, 4);
+  // Serial.print("\tcorrection_angle_y: ");
+  // Serial.print(correction_angle_y, 4);
+  // Serial.print("\tcorrection_angle_z: ");
+  // Serial.print(correction_angle_z, 4);
+  // Serial.print("\tErr_x: ");
+  // Serial.print(Err_x, 4);
+  // Serial.print("\tErr_y: ");
+  // Serial.print(Err_y, 4);
+  // Serial.print("\tErr_z: ");
+  // Serial.print(Err_z, 4);
 }// end of main, code that was looped in hdk.ino

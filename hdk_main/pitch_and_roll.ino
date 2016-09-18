@@ -31,13 +31,13 @@ void pitch_and_roll_loop(unsigned long runTime){
 		multiplier = multiplier + 1;
 	}	
 
-  Serial.print("RPM's: ");
-  Serial.print(analogRead(pwmPin1));
-  Serial.print(", ");
-  Serial.print(analogRead(pwmPin2));
-  Serial.print(", ");
-  Serial.print(analogRead(pwmPin3));
-  Serial.print(", ");
-	Serial.println(analogRead(pwmPin4));
+ //  Serial.print("RPM's: ");
+ //  Serial.print(analogRead(pwmPin1));
+ //  Serial.print(", ");
+ //  Serial.print(analogRead(pwmPin2));
+ //  Serial.print(", ");
+ //  Serial.print(analogRead(pwmPin3));
+ //  Serial.print(", ");
+	// Serial.println(analogRead(pwmPin4));
 
 }

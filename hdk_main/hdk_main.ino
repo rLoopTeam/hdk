@@ -47,8 +47,8 @@ void BNO055_loop();
 void rpm_ramp_loop();
 
 // pitch_and_roll.ino
-void pitch_and_roll_setup();
-void pitch_and_roll_loop(unsigned long runTime);
+//void pitch_and_roll_setup();
+//void pitch_and_roll_loop(unsigned long runTime);
 
 
 
@@ -81,12 +81,13 @@ void loop() {
   runTime = now - startTime;
 
   pid_loop(timeChange);
-  rpm_ramp_loop();
   BNO055_loop();
+  //rpm_ramp_loop();
   read_optoNCDT_values();
-  pitch_and_roll_loop(runTime);
+  //pitch_and_roll_loop(runTime);
 
-  Serial.println(""); // New line for next sample
+//  Serial.println(""); // New line for next sample
 
+  delay(1000);
 }
 

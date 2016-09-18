@@ -10,14 +10,6 @@ Servo myservo2;
 Servo myservo3;
 Servo myservo4;
 
-void servo_initial_setup(){
-  myservo1.attach(step1);
-  myservo2.attach(step2);
-  myservo3.attach(step3);
-  myservo4.attach(step4);
-  set_servo(90, 70, 90, 100); // TODO ask about this
-  delay(1000);
-}
 
 /*
  * Function for setting the servos including a calibration value

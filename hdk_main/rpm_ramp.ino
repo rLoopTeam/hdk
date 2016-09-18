@@ -1,6 +1,6 @@
-// run through the possible values for rpm to see how hover engine hover height is affected
+/* run through the possible values for rpm to see how hover engine hover height is affected */
 
-int rpm_counter = 999;
+int rpm_counter = 1500;
 
 void set_rpm(); // use func from hover_engine.ino to set engine rpm's
 
@@ -13,6 +13,7 @@ void rpm_ramp_loop(){
   }
   set_rpm(rpm_counter, rpm_counter, rpm_counter, rpm_counter); // we speculate 1000-2000 is the acceptable range of pulse lengths to vary rpm
 
-  Serial.print("RPM: ");
-  Serial.println(rpm_counter);
+  // Serial.print("RPM: ");
+  Serial.print(rpm_counter);
+  Serial.print(",");
 }
