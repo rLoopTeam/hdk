@@ -13,7 +13,7 @@ void hover_engine_setup(){
   analogWriteFrequency(pwmPin2, 490); // Second parameter is in hz
   analogWriteFrequency(pwmPin3, 490);
   analogWriteFrequency(pwmPin4, 490);
-  analogWriteResolution(12);
+//  analogWriteResolution(12);
   stop_motors();
   delay(3000);
   start_motors();

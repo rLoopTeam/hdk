@@ -57,13 +57,15 @@ void rpm_ramp_loop();
  * Reset the HDK, initialise sensors and PID and start motors
  */
 void setup(){  
-  Serial.begin(9600);
+  hover_engine_setup();
+  delay(1000);
 
   servo_setup();
-  hover_engine_setup();
+ 
   //BNO055_setup();
 
   //pid_setup(0.2, 0, 0, 0, 0, 0, 0, 0, 0); // pid constants (3-dimensions)
+   Serial.begin(9600);
 
   delay(30000);
 
@@ -82,7 +84,7 @@ void loop() {
   //pid_loop(timeChange);
   //BNO055_loop();
   rpm_ramp_loop();
-  read_optoNCDT_values();
+//  read_optoNCDT_values();
   //pitch_and_roll_loop(runTime);
 
   delay(1000);
