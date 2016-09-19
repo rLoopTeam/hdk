@@ -10,15 +10,13 @@ void hover_engine_setup(){
   pinMode(pwmPin3, OUTPUT);
   pinMode(pwmPin4, OUTPUT);
   analogWriteFrequency(pwmPin1, 490); //why?
-  analogWriteFrequency(pwmPin2, 490); // Second parameter is hz
+  analogWriteFrequency(pwmPin2, 490); // Second parameter is in hz
   analogWriteFrequency(pwmPin3, 490);
   analogWriteFrequency(pwmPin4, 490);
   analogWriteResolution(12);
   stop_motors();
   delay(3000);
   start_motors();
-
-
 
 }
 /*
@@ -31,6 +29,8 @@ void start_motors()
   analogWrite(pwmPin3, 249);
   analogWrite(pwmPin4, 249);
 }
+
+
 /*
  * Function for stopping the motors (hover engines)
  */

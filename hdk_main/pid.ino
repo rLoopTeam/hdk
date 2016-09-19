@@ -43,12 +43,11 @@ void pid_setup(double p_x, double i_x, double d_x, double p_y, double i_y, doubl
 
 int compute_correction(double Err, double last_error, double kp, double ki, double kd, double timeChange){
   // if the sensor is returning a value between 0 and 180, set reverse the error value and set direction to 0
+  double correction_angle = 0;
   if (Err > 180)
   {
     Err = Err - 360;
   }
-
-  double dErr = 0;
 
   if (!firstTime)
   {
@@ -60,7 +59,6 @@ int compute_correction(double Err, double last_error, double kp, double ki, doub
   }  
 
   // final PID value
-  double correction_angle = 0;
   correction_angle = kp * Err + ki * iErr + kd * dErr;
   
   firstTime = 1;
@@ -103,10 +101,10 @@ void pid_loop(int timeChange){
   correction_rpm_z = pulse_correction(correction_angle_z);
 
   /********** YAW CORRECTION (complete w/ pid) *************/
-    if (correction_angle_x < 0)
-    {
-      correction_angle_x = -1 * correction_angle_x;
-    }
+  if (correction_angle_x < 0)
+  {
+    correction_angle_x = -1 * correction_angle_x;
+  }
 
   // cap the correction_angle value at 20 for yaw, beyond that risks the gimbal hiting the ground or the top plate
   if (correction_angle_x > 20)
@@ -131,14 +129,14 @@ void pid_loop(int timeChange){
   // set_rpm()
 
   //1, 2 are back; 3, 4 are front
-  if (Err_y < 0)
-  {
+  // if (Err_y < 0)
+  // {
     
-  }
-  else
-  {
+  // }
+  // else
+  // {
     
-  }
+  // }
 
   /********** ROLL CORRECTION *************/
   // adjust engine rpms

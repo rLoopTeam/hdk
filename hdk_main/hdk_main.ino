@@ -24,11 +24,11 @@ unsigned long startTime = millis();
 
 /********* Declare functions from other files ********/
 // pid.ino
-void pid_setup();
-void pid_loop(int timeChange);
+// void pid_setup(double p_x, double i_x, double d_x, double p_y, double i_y, double d_y, double p_z, double i_z, double d_z);
+// void pid_loop(int timeChange);
 
 // servo.ino
-void set_servo();
+void set_servo(double myservo1_val, double myservo2_val, double myservo3_val, double myservo4_val);
 void servo_setup();
 
 // hover_engine.ino
@@ -40,8 +40,8 @@ void stop_motors();
 void read_optoNCDT_values();
 
 // BNO055.ino
-void BNO055_setup();
-void BNO055_loop();
+// void BNO055_setup();
+// void BNO055_loop();
 
 // rpm_ramp.ino
 void rpm_ramp_loop();
@@ -61,18 +61,17 @@ void setup(){
 
   servo_setup();
   hover_engine_setup();
-  BNO055_setup();
+  //BNO055_setup();
 
-  //setup_constants(0.2, 0, 0); 
-  pid_setup(0.2, 0, 0, 0, 0, 0, 0, 0, 0); // put this in pid.ino
+  //pid_setup(0.2, 0, 0, 0, 0, 0, 0, 0, 0); // pid constants (3-dimensions)
 
-  delay(1000);
+  delay(30000);
 
 }
 
 
 /*
- * Main loop function.
+ * Main loop function. Calls loop functions from each file.
  */
 
 void loop() {
@@ -80,13 +79,11 @@ void loop() {
   double timeChange = (double)(now - lastTime);
   runTime = now - startTime;
 
-  pid_loop(timeChange);
-  BNO055_loop();
-  //rpm_ramp_loop();
+  //pid_loop(timeChange);
+  //BNO055_loop();
+  rpm_ramp_loop();
   read_optoNCDT_values();
   //pitch_and_roll_loop(runTime);
-
-//  Serial.println(""); // New line for next sample
 
   delay(1000);
 }

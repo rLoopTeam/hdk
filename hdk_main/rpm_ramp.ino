@@ -2,7 +2,7 @@
 
 int rpm_counter = 1500;
 
-void set_rpm(); // use func from hover_engine.ino to set engine rpm's
+void set_rpm(int rpm1, int rpm2, int rpm3, int rpm4); // use func from hover_engine.ino to set engine rpm's
 
 void rpm_ramp_loop(){
   // increment the pulse length and call func to write to pin; 

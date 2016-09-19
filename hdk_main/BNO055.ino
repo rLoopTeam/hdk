@@ -1,8 +1,5 @@
 /* BNO055.ino
  * 
- * 
- * 
- * 
 */ 
 
 static double measured_BNO_value_x; // value output from the BNO orientation sensor

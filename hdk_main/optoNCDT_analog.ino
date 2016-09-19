@@ -18,24 +18,23 @@ void convert(){
   distance_measured = (sensorValue - min_distance_10bit) * max_distance / 1023 + min_distance;  
 }
 
-// TODO similar for laser, would need to connect additional laser wires (brown wire outputs error messages)
 
 /* Takes a reading from each laser distance sensor */
 void read_optoNCDT_values() {
   sensorValue = analogRead(sensorPin1);
-//  Serial.print("Sensor1: ");
+  // Serial.print("Sensor1: ");
   Serial.print(sensorValue);
   Serial.print(",");
-//  Serial.print("  ");
-  convert();
- // Serial.println(distance_measured);
+  // Serial.print("  ");
+  // convert();
+  // Serial.println(distance_measured);
 
   sensorValue = analogRead(sensorPin4);
-//  Serial.print("Sensor4: ");
+  // Serial.print("Sensor4: ");
   Serial.print(sensorValue);
   Serial.print(",");
-//  Serial.print("  ");
-  convert();
+  // Serial.print("  ");
+  // convert();
   // Serial.println(distance_measured);
 
   sensorValue = analogRead(sensorPin5);
@@ -44,7 +43,7 @@ void read_optoNCDT_values() {
   Serial.print(",");
   Serial.println("");
   // Serial.print("  ");
-  convert();
+  // convert();
   // Serial.println(distance_measured);
 
 }

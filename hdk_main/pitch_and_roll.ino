@@ -1,7 +1,7 @@
 /* test ability to control HDK pitch and roll orientation at rest */
 	// roll left, right; pitch forward, back; for 1 sec each
 
-void set_rpm(); // use func from hover_engine.ino to set engine rpm's 
+void set_rpm(int rpm1, int rpm2, int rpm3, int rpm4); // use func from hover_engine.ino to set engine rpm's 
 
 int mid_range_rpm = 1500; // change based on rpm_ramp data
 int delta = 500; // amount to vary rpm by; start at full range
