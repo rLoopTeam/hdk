@@ -63,10 +63,10 @@ void displayCalStatus(void)
   bno.getCalibration(&system, &gyro, &accel, &mag);
 
   /* The data should be ignored until the system calibration is > 0 */
-  Serial.print("\t");
+  //Serial.print("\t");
   if (!system)
   {
-    Serial.print("! ");
+    //Serial.print("! ");
   }
 
   /* Display the individual values */
@@ -84,7 +84,7 @@ void displayCalStatus(void)
 
 // Initial setup code for BNO
 void BNO055_setup(){
-	  Serial.println("Orientation Sensor Test"); Serial.println("");
+	  //Serial.println("Orientation Sensor Test"); Serial.println("");
 
   /* Initialise the sensor */
   if(!bno.begin())
@@ -118,11 +118,11 @@ void BNO055_loop(){
   measured_BNO_value_x = event.orientation.x;
   measured_BNO_value_y = event.orientation.y;
   measured_BNO_value_z = event.orientation.z;
-
-
+  
 
   // Serial.print("X: ");
-  // Serial.print(event.orientation.x, 4);
+  Serial.print(event.orientation.x, 4);
+  Serial.print(",");
   // Serial.print("\tY: ");
   // Serial.print(event.orientation.y, 4);
   // Serial.print("\tZ: ");

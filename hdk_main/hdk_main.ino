@@ -61,10 +61,10 @@ void setup(){
   delay(1000);
   servo_setup();
   BNO055_setup();
-  pid_setup(0.2, 0, 0, 0, 0, 0, 0, 0, 0); // pid constants (3-dimensions)
+  // pid_setup(0.2, 0, 0, 0, 0, 0, 0, 0, 0); // pid constants (3-dimensions)
   Serial.begin(9600);
 
-  delay(30000); // hover for 30 seconds. pretty poor way of doing this.
+  delay(10000); // hover for X seconds.
 
 }
 
@@ -77,12 +77,18 @@ void loop() {
   unsigned long now = millis();
   double timeChange = (double)(now - lastTime);
   runTime = now - startTime;
+  Serial.print(runTime/1000); // elapsed time
+  Serial.print(",");
 
   pid_loop(timeChange);
   BNO055_loop();
   rpm_ramp_loop();
   read_optoNCDT_values();
   //pitch_and_roll_loop(runTime);
+  // if (runTime > 60000){
+  //   stop_motors();
+  //   delay(999999999999);
+  // }
 
   delay(1000);
 }
