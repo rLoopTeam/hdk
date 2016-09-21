@@ -94,7 +94,7 @@ func main() {
 	acc_channel_data := make(chan string, 0)
 
 	//open two usb ports. we use i to make sure we dont open the same port twice!
-	usb_1 := openPort("/dev/cu.usbmodem1887511")
+	usb_1 := openPort("/dev/cu.usbmodem1967811")
 
 	//make 2 buffered readers from serial port readers. buffered readers are easier to work with
 	reader_1 := bufio.NewReader(usb_1)
@@ -127,7 +127,7 @@ func main() {
 	}
 
 	//write the header with column names
-	file.WriteString("X,Y,Z\n")
+	file.WriteString("Time,Yaw,RPM,Laser1,Laser2,Laser3,\n")
 
 	//start file writer and sensor reader threads. "go" command runs a function in a separate thread! (technically a separate "go routine", which is "almost" a thread)
 	go fileWriter(acc_channel_in, acc_channel_data, file)
