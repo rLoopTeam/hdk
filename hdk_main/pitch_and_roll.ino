@@ -1,10 +1,12 @@
 /* test ability to control HDK pitch and roll orientation at rest */
 	// roll left, right; pitch forward, back; for 1 sec each
+	// before running, need data on hover height vs rpm to avoid hitting the floor
+
 
 void set_rpm(int rpm1, int rpm2, int rpm3, int rpm4); // use func from hover_engine.ino to set engine rpm's 
 
-int mid_range_rpm = 1500; // change based on rpm_ramp data
-int delta = 500; // amount to vary rpm by; start at full range
+int mid_range_rpm = 214; // change based on rpm_ramp data
+int delta = 34; // amount to vary rpm by; rough choice based on seeing that hdk wont get off the ground at ~150 or lower pulse width for rpm
 int multiplier = 0; // allows looping the pitch/roll sequence
 
 void pitch_and_roll_setup(){

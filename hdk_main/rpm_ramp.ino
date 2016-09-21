@@ -1,4 +1,5 @@
 /* run through the possible values for rpm to see how hover engine hover height is affected */
+  // need to note in particular the value at which hdk can safely hover
 
 int rpm_counter = 125;
 

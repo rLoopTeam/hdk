@@ -33,6 +33,6 @@ void servo_setup(){
   myservo2.attach(step2);
   myservo3.attach(step3);
   myservo4.attach(step4);
-  set_servo(90, 90, 90, 90); // TODO ask about this
+  set_servo(90, 90, 90, 90); // formerly (90, 70, 90, 100)..not sure why
   delay(1000);
 }

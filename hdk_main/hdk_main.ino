@@ -24,8 +24,8 @@ unsigned long startTime = millis();
 
 /********* Declare functions from other files ********/
 // pid.ino
-// void pid_setup(double p_x, double i_x, double d_x, double p_y, double i_y, double d_y, double p_z, double i_z, double d_z);
-// void pid_loop(int timeChange);
+void pid_setup(double p_x, double i_x, double d_x, double p_y, double i_y, double d_y, double p_z, double i_z, double d_z);
+void pid_loop(int timeChange);
 
 // servo.ino
 void set_servo(double myservo1_val, double myservo2_val, double myservo3_val, double myservo4_val);
@@ -40,8 +40,8 @@ void stop_motors();
 void read_optoNCDT_values();
 
 // BNO055.ino
-// void BNO055_setup();
-// void BNO055_loop();
+void BNO055_setup();
+void BNO055_loop();
 
 // rpm_ramp.ino
 void rpm_ramp_loop();
@@ -59,15 +59,12 @@ void rpm_ramp_loop();
 void setup(){  
   hover_engine_setup();
   delay(1000);
-
   servo_setup();
- 
-  //BNO055_setup();
+  BNO055_setup();
+  pid_setup(0.2, 0, 0, 0, 0, 0, 0, 0, 0); // pid constants (3-dimensions)
+  Serial.begin(9600);
 
-  //pid_setup(0.2, 0, 0, 0, 0, 0, 0, 0, 0); // pid constants (3-dimensions)
-   Serial.begin(9600);
-
-  delay(30000);
+  delay(30000); // hover for 30 seconds. pretty poor way of doing this.
 
 }
 
@@ -81,10 +78,10 @@ void loop() {
   double timeChange = (double)(now - lastTime);
   runTime = now - startTime;
 
-  //pid_loop(timeChange);
-  //BNO055_loop();
+  pid_loop(timeChange);
+  BNO055_loop();
   rpm_ramp_loop();
-//  read_optoNCDT_values();
+  read_optoNCDT_values();
   //pitch_and_roll_loop(runTime);
 
   delay(1000);

@@ -1,3 +1,5 @@
+/* All PID control loops can be found here */
+
 static double last_error_x; // error stored from previous loop through code
 static double last_error_y; // error stored from previous loop through code
 static double last_error_z; // error stored from previous loop through code
@@ -23,7 +25,7 @@ double ki_z; // "" ""
 double kd_z; // "" ""
 int firstTime = 0;
 
-void set_servo(double myservo1_val, double myservo2_val, double myservo3_val, double myservo4_val); 
+void set_servo(double myservo1_val, double myservo2_val, double myservo3_val, double myservo4_val); // use func from servo.ino to vary gimballing angle
 
 /*
  * Function for setting up the three PID constants

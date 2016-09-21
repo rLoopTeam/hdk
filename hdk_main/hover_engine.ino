@@ -1,3 +1,6 @@
+/* Control of HDK Engines */
+
+
 // hover engine pins
 #define pwmPin1 20
 #define pwmPin2 21
@@ -13,7 +16,6 @@ void hover_engine_setup(){
   analogWriteFrequency(pwmPin2, 490); // Second parameter is in hz
   analogWriteFrequency(pwmPin3, 490);
   analogWriteFrequency(pwmPin4, 490);
-//  analogWriteResolution(12);
   stop_motors();
   delay(3000);
   start_motors();
@@ -44,7 +46,7 @@ void stop_motors()
 
 
 /*
- * Function for setting the motor rpm (hover engines); speculative range 1000-2000
+ * Function for setting the motor rpm (hover engines); range is 126-248 (mostly true; not sure about lower end of range)
  */
 void set_rpm(int rpm1, int rpm2, int rpm3, int rpm4)
 {

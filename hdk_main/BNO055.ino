@@ -1,5 +1,5 @@
 /* BNO055.ino
- * 
+ *  Reading values and printing the status of the BNO accelerometer
 */ 
 
 static double measured_BNO_value_x; // value output from the BNO orientation sensor

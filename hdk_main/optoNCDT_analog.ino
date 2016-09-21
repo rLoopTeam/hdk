@@ -1,3 +1,6 @@
+/* This file handles taking readings from the laser distance sensors*/
+  // will need to be changed from analog to digital
+
 int sensorPin5 = A0;
 int sensorPin1 = A1;
 int sensorPin4 = A2;
