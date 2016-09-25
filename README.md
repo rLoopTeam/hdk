@@ -14,7 +14,7 @@ For an overview on PID concpets in C, please see: http://coder-tronics.com/pid-t
 ## History
 
 * PID testing and debugging ongoing @scrappymacgyver (Mila) @reptar (Dene)
-	*Developing code for pitch, roll, and yaw.
+	* Developing code for pitch, roll, and yaw.
 * readme created by @agaesser (Alex Gaesser)
 * .ino files refactored into .c and .h files by @riotingcherry (Kadyn Martinez)
 
