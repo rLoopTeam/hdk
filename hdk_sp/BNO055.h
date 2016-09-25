@@ -30,3 +30,8 @@ void displayCalStatus(void);
  *  inital setup code for BNO
  */
 void BNO055_setup();
+
+/**
+ *  accelerometer loop
+ */
+void BNO055_loop();
