@@ -76,8 +76,6 @@ int pulse_correction(double correction_angle);
  *  The bulk of the pid functions.
  *  @param timeChange the time between now and last
  */
-void pid_loop(int timeChange) {
-
-}
+void pid_loop(int timeChange);
 
 #endif
