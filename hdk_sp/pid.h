@@ -6,29 +6,29 @@
  */
 
 
- static double last_error_x; // error stored from previous loop through code
- static double last_error_y; // error stored from previous loop through code
- static double last_error_z; // error stored from previous loop through code
- static double set_point = 0; // desired direction in degrees
- static double correction_angle_x; // correction that needs to be made to the direction of the servos to move toward the set_point
- static double correction_angle_y; // correction that needs to be made to the direction of the servos to move toward the set_point
- static double correction_angle_z; // correction that needs to be made to the direction of the servos to move toward the set_point
- static double correction_rpm_y; //correction in pulse for pwm converted from angle
- static double correction_rpm_z; //correction in pulse for pwm converted from angle
- double Err_x = 0;  // Current measured error
- double Err_y = 0;  // Current measured error
- double Err_z = 0;  // Current measured error
- double iErr = 0; // integrated error (PID)
- double dErr = 0; // differential error (PID)
- double kp_x; // constants to tune PID loop
- double ki_x; // "" ""
- double kd_x; // "" ""
- double kp_y; // constants to tune PID loop
- double ki_y; // "" ""
- double kd_y; // "" ""
- double kp_z; // constants to tune PID loop
- double ki_z; // "" ""
- double kd_z; // "" ""
+ static double last_error_x; 		// error stored from previous loop through code
+ static double last_error_y; 		// error stored from previous loop through code
+ static double last_error_z; 		// error stored from previous loop through code
+ static double set_point = 0; 		// desired direction in degrees
+ static double correction_angle_x; 	// correction that needs to be made to the direction of the servos to move toward the set_point
+ static double correction_angle_y; 	// correction that needs to be made to the direction of the servos to move toward the set_point
+ static double correction_angle_z; 	// correction that needs to be made to the direction of the servos to move toward the set_point
+ static double correction_rpm_y; 	// correction in pulse for pwm converted from angle
+ static double correction_rpm_z; 	// correction in pulse for pwm converted from angle
+ double Err_x = 0;  				// Current measured error
+ double Err_y = 0;  				// Current measured error
+ double Err_z = 0;  				// Current measured error
+ double iErr = 0; 					// integrated error (PID)
+ double dErr = 0; 					// differential error (PID)
+ double kp_x; 						// constants to tune PID loop
+ double ki_x; 						// "" ""
+ double kd_x; 						// "" ""
+ double kp_y; 						// constants to tune PID loop
+ double ki_y; 						// "" ""
+ double kd_y; 						// "" ""
+ double kp_z; 						// constants to tune PID loop
+ double ki_z; 						// "" ""
+ double kd_z; 						// "" ""
  int firstTime = 0;
 
 /**
