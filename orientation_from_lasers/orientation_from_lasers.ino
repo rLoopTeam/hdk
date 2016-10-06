@@ -43,28 +43,28 @@ void setup() {
   analogWriteFrequency(pwmPin4, 490);
   // put your setup code here, to run once:
   
-  delay(2000);
-  stop_motors();
-  delay(6000);
+  // delay(2000);
+  // stop_motors();
+  // delay(6000);
   // cut power here?
   Serial.begin(9600);
-  start_motors();
+  // start_motors();
 
-  delay(30000);
+  // delay(30000);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  delay(5000);
+  // delay(5000);
   read_optoNCDT_values();
-  Serial.print(rpm_counter);
-  Serial.print(",");
-  set_rpm(rpm_counter,rpm_counter,rpm_counter,rpm_counter);
-    rpm_counter -=1;
+  // Serial.print(rpm_counter);
+  // Serial.print(",");
+  // set_rpm(rpm_counter,rpm_counter,rpm_counter,rpm_counter);
+  //   rpm_counter -=1;
   
-  if (rpm_counter == 135){ 
-      stop_motors();
-  }
+  // if (rpm_counter == 135){ 
+  //     stop_motors();
+  // }
 
 
  
