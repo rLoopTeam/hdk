@@ -18,6 +18,7 @@ plotly.offline.plot({
             ,Scatter(y=df["Laser3mm"],name='Laser3mm')
             ,Scatter(y=df["Ritch"],name='Ritch')
             ,Scatter(y=df["Roll"],name='Roll')
+            ,Scatter(y=df["PWM"],name='PWM')
             ],
     "layout": Layout(title="RPM Incrementing")
 })
