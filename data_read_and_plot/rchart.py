@@ -12,12 +12,13 @@ df = pd.read_csv(sys.argv[1],error_bad_lines=False)
 df.head()
 
 plotly.offline.plot({
-    "data": [Scatter(y=df["Time"],name='Time')
-    		,Scatter(y=df["Yaw"],name='Yaw')
-    		,Scatter(y=df["RPM"],name='RPM')
-            ,Scatter(y=df["Laser1"],name='Laser1')
-            ,Scatter(y=df["Laser2"],name='Laser2')
-            ,Scatter(y=df["Laser3"],name='Laser3')
+    "data": [
+             Scatter(y=df["Laser1mm"],name='Laser1mm')
+            ,Scatter(y=df["Laser2mm"],name='Laser2mm')
+            ,Scatter(y=df["Laser3mm"],name='Laser3mm')
+            ,Scatter(y=df["Ritch"],name='Ritch')
+            ,Scatter(y=df["Roll"],name='Roll')
+            ,Scatter(y=df["PWM"],name='PWM')
             ],
     "layout": Layout(title="RPM Incrementing")
 })
