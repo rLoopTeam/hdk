@@ -127,7 +127,7 @@ func main() {
 	}
 
 	//write the header with column names
-	file.WriteString("Time,Yaw,RPM,Laser1,Laser2,Laser3,\n")
+	file.WriteString("Laser1,Laser2,Laser3,Pitch, Roll, PWM \n")
 
 	//start file writer and sensor reader threads. "go" command runs a function in a separate thread! (technically a separate "go routine", which is "almost" a thread)
 	go fileWriter(acc_channel_in, acc_channel_data, file)
