@@ -93,7 +93,7 @@ void RecalcPitch()
 
 void PrintPlane()
 {
-	printf("A:%f B:%f C:%f D:%f\n", PlaneA, PlaneB, PlaneC, PlaneD);
+	// printf("A:%f B:%f C:%f D:%f\n", PlaneA, PlaneB, PlaneC, PlaneD);
 }
 
 //Calculate the ground plane given three points
