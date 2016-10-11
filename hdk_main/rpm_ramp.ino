@@ -1,5 +1,5 @@
-/* run through the possible values for rpm to see how hover engine hover height is affected */
-  // need to note in particular the value at which hdk can safely hover
+/* run through the possible values for rpm-pwm to see how hover engine hover height is affected */
+  //allowed range: 125-248 (>170 to actually hover)
 
 int rpm_counter = 171;
 int loop_counter = 0;
@@ -21,7 +21,7 @@ void rpm_ramp_loop(){
     parity *= -1;
   }
 
-  set_rpm(rpm_counter, rpm_counter, rpm_counter, rpm_counter); // we speculate 1000-2000 is the acceptable range of pulse lengths to vary rpm
+  set_rpm(rpm_counter, rpm_counter, rpm_counter, rpm_counter); 
 
   if (loop_counter == 1){ // slow down motors then stop
     set_rpm(160, 160, 160, 160);

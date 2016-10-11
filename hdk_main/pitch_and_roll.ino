@@ -5,8 +5,8 @@
 
 void set_rpm(int rpm1, int rpm2, int rpm3, int rpm4); // use func from hover_engine.ino to set engine rpm's 
 
-int mid_range_rpm = 214; // change based on rpm_ramp data
-int delta = 34; // amount to vary rpm by; rough choice based on seeing that hdk wont get off the ground at ~150 or lower pulse width for rpm
+int mid_range_rpm = 200; // change based on rpm_ramp data
+int delta = 25; // amount to vary rpm by; rough choice based on seeing that hdk wont get off the ground at ~150 or lower pulse width for rpm
 int multiplier = 0; // allows looping the pitch/roll sequence
 
 void pitch_and_roll_setup(){
@@ -16,30 +16,51 @@ void pitch_and_roll_setup(){
 
 void pitch_and_roll_loop(unsigned long runTime){
 	// move left and back, forward and back; 1 sec movements; print out rpm's each loop
+	int rpm1, rpm2, rpm3, rpm4
 	if (runTime < 1000 + multiplier * 4000){ // roll left
-  	set_rpm(mid_range_rpm - delta, mid_range_rpm + delta, mid_range_rpm - delta, mid_range_rpm + delta);
+        rpm1 = mid_range_rpm - delta;
+        rpm3 = rpm1;
+        rpm2 = mid_range_rpm + delta;
+        rpm4 = rpm2;
+  		set_rpm(rpm1, rpm2, rpm3, rpm4);
 	}
 	else if(runTime < 2000 + multiplier * 4000){ // roll right
-		set_rpm(mid_range_rpm + delta, mid_range_rpm - delta, mid_range_rpm + delta, mid_range_rpm - delta); 
+		rpm1 = mid_range_rpm + delta;
+        rpm3 = rpm1;
+        rpm2 = mid_range_rpm - delta;
+        rpm4 = rpm2;
+		set_rpm(rpm1, rpm2, rpm3, rpm4); 
 	}  
 	else if(runTime < 3000 + multiplier * 4000){ // pitch up
-  	set_rpm(mid_range_rpm + delta, mid_range_rpm + delta, mid_range_rpm - delta, mid_range_rpm - delta); 
+		rpm1 = mid_range_rpm + delta;
+        rpm2 = rpm1;
+        rpm3 = mid_range_rpm - delta;
+        rpm4 = rpm3;
+  		set_rpm(rpm1, rpm2, rpm3, rpm4); 
 	}
 	else if(runTime < 4000 + multiplier * 4000){ // pitch down
-	  set_rpm(mid_range_rpm - delta, mid_range_rpm - delta, mid_range_rpm + delta, mid_range_rpm + delta); 
+		rpm1 = mid_range_rpm - delta;
+        rpm2 = rpm1;
+        rpm3 = mid_range_rpm + delta;
+        rpm4 = rpm3;
+	  	set_rpm(rpm1, rpm2, rpm3, rpm4); 
 	}
 	else{ // roll left and increment multiplier
-  	set_rpm(mid_range_rpm - delta, mid_range_rpm + delta, mid_range_rpm - delta, mid_range_rpm + delta); 
+        rpm1 = mid_range_rpm - delta;
+        rpm3 = rpm1;
+        rpm2 = mid_range_rpm + delta;
+        rpm4 = rpm2;
+  		set_rpm(rpm1, rpm2, rpm3, rpm4); 
 		multiplier = multiplier + 1;
 	}	
 
- //  Serial.print("RPM's: ");
- //  Serial.print(analogRead(pwmPin1));
- //  Serial.print(", ");
- //  Serial.print(analogRead(pwmPin2));
- //  Serial.print(", ");
- //  Serial.print(analogRead(pwmPin3));
- //  Serial.print(", ");
-	// Serial.println(analogRead(pwmPin4));
+   Serial.print("RPM's: ");
+   Serial.print(rpm1);
+   Serial.print(", ");
+   Serial.print(rpm2);
+   Serial.print(", ");
+   Serial.print(rpm3);
+   Serial.print(", ");
+   Serial.println(rpm4);
 
 }
