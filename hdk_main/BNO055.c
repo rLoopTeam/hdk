@@ -1,20 +1,3 @@
-/* BNO055.ino
- *  Reading values and printing the status of the BNO accelerometer
-*/ 
-
-static double measured_BNO_value_x; // value output from the BNO orientation sensor
-static double measured_BNO_value_y; // value output from the BNO orientation sensor
-static double measured_BNO_value_z; // value output from the BNO orientation sensor
-
-//Adafruit_MMA8451 mma = Adafruit_MMA8451();
-#define BNO055_SAMPLERATE_DELAY_MS (20)
-
-// bno055 orientation sensor
-Adafruit_BNO055 bno = Adafruit_BNO055(55);
-
-/*
- * Function for displaying the sensors details at initialisation
- */
 void displaySensorDetails(void)
 {
   sensor_t sensor;
@@ -31,9 +14,6 @@ void displaySensorDetails(void)
   delay(500);
 }
 
-/*
- * Function for displaying the status of the sensors
- */
 void displaySensorStatus(void)
 {
   /* Get the system status values (mostly for debugging purposes) */
@@ -81,8 +61,6 @@ void displayCalStatus(void)
   // Serial.print(mag, DEC);
 }
 
-
-// Initial setup code for BNO
 void BNO055_setup(){
 	  //Serial.println("Orientation Sensor Test"); Serial.println("");
 
@@ -107,18 +85,17 @@ void BNO055_setup(){
 
 }
 
-
 void BNO055_loop(){
   sensors_event_t event;
   // update sensor
   bno.getEvent(&event);
 
-  
+
   // get orientation from sensor
   measured_BNO_value_x = event.orientation.x;
   measured_BNO_value_y = event.orientation.y;
   measured_BNO_value_z = event.orientation.z;
-  
+
 
   // Serial.print("X: ");
   Serial.print(event.orientation.x, 4);
@@ -132,4 +109,3 @@ void BNO055_loop(){
   delay(BNO055_SAMPLERATE_DELAY_MS);
 
 }
-  
