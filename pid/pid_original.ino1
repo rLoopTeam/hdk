@@ -1,5 +1,3 @@
-// Target_Height, Laser_Pin1, Laser_Pin4, Laser_Pin5, H1_Height, H1_PWM, H2_Height, H2_PWM, H3_Height, H3_PWM, H4_Height, H4_PWM, H1_Adjusted_PWM, H2_Adjusted_PWM, H3_Adjusted_PWM, H4_Adjusted_PWM, 
-
 extern "C" {
   #include "LaserOrientation.h"
 }
@@ -11,9 +9,6 @@ extern "C" {
 #define pwmPin4 23
 
 #define HESIZE 4 
-
-float adjusted_PWM[4];
-
 
 //define struct
     //hover_engine.h
@@ -68,7 +63,7 @@ float Laser3Reading;
 float HE1_height, HE2_height, HE3_height, HE4_height;
 
 void setup() {
-  //struct hover_engine *he_ptr = he;
+  struct hover_engine *he_ptr = he;
   Serial.begin(9600);
   // read_optoNCDT_values(); 
   stop_motors();
@@ -76,28 +71,24 @@ void setup() {
   start_motors();
   delay(30000);
   read_optoNCDT_values(); 
-  // print_laser_info();
   get_lowest_height();
-  // print_he_info(he_ptr);
-  // Serial.print("Reach end of setup...\n");
+  print_he_info(he_ptr);
+  Serial.print("Reach end of setup...\n");
 }
 
 void loop() {
-  print_target_height();
-  // Serial.print("Testing...\n");
+  Serial.print("Testing...\n");
   struct hover_engine *he_ptr = he;
   struct pid_data *data_ptr = data;
   struct pid_constants *pid_consts_ptr = &pid_consts;
 
-  
+
   read_optoNCDT_values(); //HE heights are also calculated in here
-  print_laser_info();
+  Serial.print("Before...\n");
   print_he_info(he_ptr);
   computePID(data_ptr, pid_consts_ptr, he_ptr);
-  print_PWM_after_computePID(adjusted_PWM);
-  Serial.print("\n");
-  // Serial.print("After...\n");
-  // print_he_info(he_ptr);
+  Serial.print("After...\n");
+  print_he_info(he_ptr);
   change_motors(he_ptr);
 
  
@@ -159,8 +150,8 @@ void set_rpm(int rpm1, int rpm2, int rpm3, int rpm4)
 
 
 
-float convert(){
-  return ( 50*((double)(sensorValue-200)/800)) + 35;  
+void convert(){
+  distance_measured = ( 50*((double)(sensorValue-200)/800)) + 35;  
 }
 
 
@@ -168,34 +159,46 @@ float convert(){
 void read_optoNCDT_values() {
   sensorValue = analogRead(sensorPin1);
   
-  // Serial.print("LaserPin1: ");
+//  Serial.print(sensorValue);
+//  Serial.print(",");
+  // Serial.print("  ");
   
-  Laser1Reading = convert();
+  Serial.print("LaserPin1: ");
+  convert();
+  Laser1Reading = distance_measured;
+  Serial.print(distance_measured);
+  Serial.print(",");
+
 
   sensorValue = analogRead(sensorPin4);
-
+//  Serial.print(sensorValue);
+//  Serial.print(",");
+  // Serial.print("  ");
   
-     // Serial.print("LaserPin4: ");
+     Serial.print("LaserPin4: ");
 
-  Laser2Reading = convert();
+  convert();
+  Laser2Reading = distance_measured;
+  Serial.print(distance_measured);
+  Serial.print(",");
 
 
   sensorValue = analogRead(sensorPin5);
+//  Serial.print(sensorValue);
+//  Serial.print(",");
+//  Serial.println("");
+  // Serial.print("  ");
 
-   // Serial.print("LaserPin5: ");
+   Serial.print("LaserPin5: ");
 
-  Laser2Reading = convert();
+  convert();
+  Laser3Reading = distance_measured;
+  Serial.print(distance_measured);
+  Serial.print(",");
+//   Serial.println("");
 
    calculateOrientation();
 
-}
-
-void print_laser_info() {
-  Serial.printf("%f,",Laser1Reading);
-
-  Serial.printf("%f,",Laser2Reading);
-
-  Serial.printf("%f,",Laser3Reading);
 }
 
 void calculateOrientation() {
@@ -204,6 +207,10 @@ void calculateOrientation() {
   he[1].height = HE2HeightAboveTrack;
   he[2].height = HE3HeightAboveTrack;
   he[3].height = HE4HeightAboveTrack;
+  //Serial.printf("HE1 Height: %f\n", HE1HeightAboveTrack);
+  //Serial.printf("HE2 Height: %f\n", HE2HeightAboveTrack);
+  //Serial.printf("HE3 Height: %f\n", HE3HeightAboveTrack);
+  //Serial.printf("HE4 Height: %f\n", HE4HeightAboveTrack);
 }
 
 void get_lowest_height() {
@@ -214,22 +221,15 @@ void get_lowest_height() {
   min = min_ab < min_bc ? min_ab : min_bc;
 
   target_height = min;
-}
 
-void print_target_height() {
-  Serial.printf("%f,",target_height);
+  Serial.print("Target Height: ");
+  Serial.println(target_height);
 }
 
 void print_he_info(struct hover_engine *he_ptr) {
     for(int i = 1; i < HESIZE+1; i++){
-        Serial.printf("%f,%d,",he_ptr->height,he_ptr->pwm);
+        Serial.printf("HE%d <Height: %f, PWM: %d>\n",i,he_ptr->height,he_ptr->pwm);
         he_ptr++;
-    }
-}
-
-void print_PWM_after_computePID(float adjusted_PWM[4]) {
-  for(int i=0; i<4; i++) {
-      Serial.printf("%f,",adjusted_PWM[i]);
     }
 }
 
@@ -240,7 +240,6 @@ void set_he_pwn(struct hover_engine *he_ptr, float new_pwm[4]) {
     }
 }
 
-
 void set_he_height(struct hover_engine *he_ptr, float new_height[4]) {
     for(int i = 0; i < HESIZE; i++){
         he_ptr->height = new_height[i];
@@ -248,19 +247,19 @@ void set_he_height(struct hover_engine *he_ptr, float new_height[4]) {
     }
 }
 
-
 void computePID(struct pid_data *data_ptr, struct pid_constants *consts_ptr, struct hover_engine *he_ptr) {
     float error_diff, errorSum, errorSlope;
     float p, i, d;
     float pid;
+    float adjusted_PWM;
     unsigned long now = millis();
     int timeChange = (int)(now - lastTime);
-    // Serial.print("Time Change: ");
-    // Serial.println(timeChange);
+    Serial.print("Time Change: ");
+    Serial.println(timeChange);
     
     if(timeChange >= SampleTime){
         for(int j = 0; j < HESIZE; j++){
-            error_diff=0, errorSum=0, errorSlope=0, p=0, i=0, d=0, pid=0;
+            error_diff=0, errorSum=0, errorSlope=0, p=0, i=0, d=0, pid=0, adjusted_PWM=0;
         
             error_diff = target_height - he_ptr->height;
             errorSum = data_ptr->prev_errorSum + error_diff;
@@ -276,11 +275,11 @@ void computePID(struct pid_data *data_ptr, struct pid_constants *consts_ptr, str
             data_ptr->prev_errorSum = errorSum;
             data_ptr->prev_error_diff = error_diff;
             
-            adjusted_PWM[j] = pid < consts_ptr->out_max? (pid > consts_ptr->out_min? pid : consts_ptr->out_min) : consts_ptr->out_max;
+            adjusted_PWM = pid < consts_ptr->out_max? (pid > consts_ptr->out_min? pid : consts_ptr->out_min) : consts_ptr->out_max;
             
-//            print_PWM_after_computePID(adjusted_PWM);
+            Serial.printf("Adjusted PWM: %f\n",adjusted_PWM);
             
-            he_ptr->pwm = he_ptr->pwm + adjusted_PWM[j];
+            he_ptr->pwm = he_ptr->pwm + adjusted_PWM;
             
             he_ptr->pwm =  (he_ptr->pwm < he_ptr->maxPWM)? (he_ptr->pwm > he_ptr->minPWM?
                 he_ptr->pwm: he_ptr->minPWM): he_ptr->maxPWM;
