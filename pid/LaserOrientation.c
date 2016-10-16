@@ -16,16 +16,16 @@ float Roll, Pitch;
 
 //Laser Position Near Engine 1
 //float Laser1X = -100, Laser1Y = 100, Laser1Z = 35;
-float Laser1X = 8, Laser1Y = 185, Laser1Z = 35;
+float Laser1X = 8, Laser1Y = 185, Laser1Z = 32;
 
 
 //Laser Position Near Engine 4
 //float Laser2X = -100, Laser2Y = -100, Laser2Z = 35;
-float Laser2X = -112, Laser2Y = 18, Laser2Z = 35;
+float Laser2X = -112, Laser2Y = 18, Laser2Z = 32;
 
 //Laser Position Near Engine 3
 //float Laser3X = 100, Laser3Y = -100, Laser3Z = 35;
-float Laser3X = 121, Laser3Y = -53, Laser3Z = 35;
+float Laser3X = 121, Laser3Y = -53, Laser3Z = 34;
 
 //Hover Engine Top Left from above
 //float HE1X = -150, HE1Y=150, HE1Z=0;
