@@ -29,8 +29,8 @@ struct hover_engine{
 //};
 
 struct pid_data{
-    float prev_errorSum; //previous integral
-    float prev_error_diff; //previous proportional error
+    float prev_i_error; //previous integral
+    float prev_error; //previous proportional error
     float target_height;
 }data[HESIZE] = {{0,0,8},{0,0,8},{0,0,8},{0,0,8}};
 
@@ -54,9 +54,7 @@ int sensorPin5 = A1;
 
 int sensorValue = 0;
 
-float distance_measured = 0;
 
-int rpm_counter = 201;
 
 //Global Variables
 float Laser1Reading;
@@ -157,8 +155,6 @@ void set_rpm(int rpm1, int rpm2, int rpm3, int rpm4)
 }
 
 
-
-
 float convert(){
   return ( 50*((double)(sensorValue-200)/800)) + 35;  
 }
@@ -166,35 +162,21 @@ float convert(){
 
 /* Takes a reading from each laser distance sensor */
 void read_optoNCDT_values() {
-  sensorValue = analogRead(sensorPin1);
-  
-  // Serial.print("LaserPin1: ");
-  
+  sensorValue = analogRead(sensorPin1);  
   Laser1Reading = convert();
 
   sensorValue = analogRead(sensorPin4);
-
-  
-     // Serial.print("LaserPin4: ");
-
   Laser2Reading = convert();
-
 
   sensorValue = analogRead(sensorPin5);
-
-   // Serial.print("LaserPin5: ");
-
-  Laser2Reading = convert();
-
-   calculateOrientation();
+  Laser3Reading = convert();
+  calculateOrientation();
 
 }
 
 void print_laser_info() {
   Serial.printf("%f,",Laser1Reading);
-
   Serial.printf("%f,",Laser2Reading);
-
   Serial.printf("%f,",Laser3Reading);
 }
 
@@ -250,7 +232,7 @@ void set_he_height(struct hover_engine *he_ptr, float new_height[4]) {
 
 
 void computePID(struct pid_data *data_ptr, struct pid_constants *consts_ptr, struct hover_engine *he_ptr) {
-    float error_diff, errorSum, errorSlope;
+    float error, i_error, d_error;
     float p, i, d;
     float pid;
     unsigned long now = millis();
@@ -260,21 +242,21 @@ void computePID(struct pid_data *data_ptr, struct pid_constants *consts_ptr, str
     
     if(timeChange >= SampleTime){
         for(int j = 0; j < HESIZE; j++){
-            error_diff=0, errorSum=0, errorSlope=0, p=0, i=0, d=0, pid=0;
+            error=0, i_error=0, d_error=0, p=0, i=0, d=0, pid=0;
         
-            error_diff = target_height - he_ptr->height;
-            errorSum = data_ptr->prev_errorSum + error_diff;
-            errorSlope = error_diff - data_ptr->prev_error_diff;
+            error = target_height - he_ptr->height;
+            i_error = data_ptr->prev_i_error + error*timeChange;
+            d_error = (error - data_ptr->prev_error)/timeChange;
         
-            p = error_diff * consts_ptr->Kp;
-            i = errorSum * consts_ptr->Ki;
-            d = errorSlope * consts_ptr->Kd;
+            p = error * consts_ptr->Kp;
+            i = i_error * consts_ptr->Ki;
+            d = d_error * consts_ptr->Kd;
         
             pid = p + i + d;
             
-            errorSum = errorSum * consts_ptr->i_decay;
-            data_ptr->prev_errorSum = errorSum;
-            data_ptr->prev_error_diff = error_diff;
+            i_error = i_error * consts_ptr->i_decay;
+            data_ptr->prev_i_error = i_error;
+            data_ptr->prev_error = error;
             
             adjusted_PWM[j] = pid < consts_ptr->out_max? (pid > consts_ptr->out_min? pid : consts_ptr->out_min) : consts_ptr->out_max;
             

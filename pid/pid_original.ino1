@@ -24,7 +24,7 @@ struct hover_engine{
 //};
 
 struct pid_data{
-    float prev_errorSum; //previous integral
+    float prev_i_error; //previous integral
     float prev_error_diff; //previous proportional error
     float target_height;
 }data[HESIZE] = {{0,0,8},{0,0,8},{0,0,8},{0,0,8}};
@@ -248,7 +248,7 @@ void set_he_height(struct hover_engine *he_ptr, float new_height[4]) {
 }
 
 void computePID(struct pid_data *data_ptr, struct pid_constants *consts_ptr, struct hover_engine *he_ptr) {
-    float error_diff, errorSum, errorSlope;
+    float error_diff, i_error, d_error;
     float p, i, d;
     float pid;
     float adjusted_PWM;
@@ -259,20 +259,20 @@ void computePID(struct pid_data *data_ptr, struct pid_constants *consts_ptr, str
     
     if(timeChange >= SampleTime){
         for(int j = 0; j < HESIZE; j++){
-            error_diff=0, errorSum=0, errorSlope=0, p=0, i=0, d=0, pid=0, adjusted_PWM=0;
+            error_diff=0, i_error=0, d_error=0, p=0, i=0, d=0, pid=0, adjusted_PWM=0;
         
             error_diff = target_height - he_ptr->height;
-            errorSum = data_ptr->prev_errorSum + error_diff;
-            errorSlope = error_diff - data_ptr->prev_error_diff;
+            i_error = data_ptr->prev_i_error + error_diff;
+            d_error = error_diff - data_ptr->prev_error_diff;
         
             p = error_diff * consts_ptr->Kp;
-            i = errorSum * consts_ptr->Ki;
-            d = errorSlope * consts_ptr->Kd;
+            i = i_error * consts_ptr->Ki;
+            d = d_error * consts_ptr->Kd;
         
             pid = p + i + d;
             
-            errorSum = errorSum * consts_ptr->i_decay;
-            data_ptr->prev_errorSum = errorSum;
+            i_error = i_error * consts_ptr->i_decay;
+            data_ptr->prev_i_error = i_error;
             data_ptr->prev_error_diff = error_diff;
             
             adjusted_PWM = pid < consts_ptr->out_max? (pid > consts_ptr->out_min? pid : consts_ptr->out_min) : consts_ptr->out_max;
